@@ -1,0 +1,59 @@
+from task1.models import Buyer, Game
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+ImportError: cannot import name 'Buyer' from 'task1.models' (C:\Users\Игорь\Projects\Django_119\MyProject\task1\models.py)
+>>> from task1.models import Buyers, Game 
+>>> Buyers.objects.create(name='Ilya', balance = 1500.05, age = 24)
+<Buyers: Buyers object (1)>
+>>> Buyers.objects.create(name='Terminator2000', balance = 42.15, age = 52) 
+<Buyers: Buyers object (2)>
+>>> Buyers.objects.create(name='Ubivator432', balance = 0.5, age = 16)   
+<Buyers: Buyers object (3)>
+>>> Game.objects.create(title = Cyberpank 2077, cost = 31, size = 46.2, description = 'Game of the year', age_limited = True)
+  File "<console>", line 1
+    Game.objects.create(title = Cyberpank 2077, cost = 31, size = 46.2, description = 'Game of the year', age_limited = True)
+                                ^^^^^^^^^^^^^^
+SyntaxError: invalid syntax. Perhaps you forgot a comma?
+>>> Game.objects.create(title = 'Cyberpank 2077', cost = 31, size = 46.2, description = 'Game of the year', age_limited = True) 
+<Game: Game object (1)>
+>>> Game.objects.create(title = 'Mario', cost = 5, size = 0.5, description = 'Old Game')                                        
+<Game: Game object (2)>
+>>> Game.objects.create(title = 'Hitman', cost = 12, size = 36.6, description = 'Who kills Mark?', age_limited = True)           
+<Game: Game object (3)>
+>>> Game.objects.all()
+<QuerySet [<Game: Game object (1)>, <Game: Game object (2)>, <Game: Game object (3)>]>
+>>> Game.objects.get(id=1).buyer.set(('Ilya', 'Terminator2000'))  
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Game' object has no attribute 'buyer'. Did you mean: 'buyers'?
+>>> Game.objects.get(id=1).buyers.set(('Ilya', 'Terminator2000'))   
+Traceback (most recent call last):
+  File "C:\Users\Игорь\Projects\Django_119\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2123, in get_prep_value    
+    return int(value)
+           ^^^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'Ilya'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "C:\Users\Игорь\Projects\Django_119\.venv\Lib\site-packages\django\db\models\fields\related_descriptors.py", line 1344, in set    
+    else self.target_field.get_prep_value(obj)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Игорь\Projects\Django_119\.venv\Lib\site-packages\django\db\models\fields\related.py", line 1148, in get_prep_value     
+    return self.target_field.get_prep_value(value)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Игорь\Projects\Django_119\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 2125, in get_prep_value    
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got 'Ilya'.
+>>> Game.objects.get(id=1).buyer.set((1, 2))                       
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Game' object has no attribute 'buyer'. Did you mean: 'buyers'?
+>>> Game.objects.get(id=1).buyers.set((1, 2))                                  
+>>> Game.objects.get(id=2).buyers.set((2, 3))                       
+>>> Game.objects.get(id=3).buyer.set((1, 2))                       
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Game' object has no attribute 'buyer'. Did you mean: 'buyers'?
+>>> Game.objects.get(id=2).buyers.set((1, 2))
